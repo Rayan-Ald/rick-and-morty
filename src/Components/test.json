@@ -1,0 +1,112 @@
+[
+    {
+        "id": 128,
+        "name": "Frankenstein's Monster",
+        "status": "Dead",
+        "species": "Alien",
+        "type": "Parasite",
+        "gender": "Male",
+        "origin": {
+            "name": "unknown",
+            "url": ""
+        },
+        "location": {
+            "name": "Earth (Replacement Dimension)",
+            "url": "https://rickandmortyapi.com/api/location/20"
+        },
+        "image": "https://rickandmortyapi.com/api/character/avatar/128.jpeg",
+        "episode": [
+            "https://rickandmortyapi.com/api/episode/15"
+        ],
+        "url": "https://rickandmortyapi.com/api/character/128",
+        "created": "2017-12-26T19:24:56.679Z"
+    },
+    {
+        "id": 214,
+        "name": "Man Painted Silver Who Makes Robot Noises",
+        "status": "Alive",
+        "species": "Human",
+        "type": "",
+        "gender": "Male",
+        "origin": {
+            "name": "unknown",
+            "url": ""
+        },
+        "location": {
+            "name": "Interdimensional Cable",
+            "url": "https://rickandmortyapi.com/api/location/6"
+        },
+        "image": "https://rickandmortyapi.com/api/character/avatar/214.jpeg",
+        "episode": [
+            "https://rickandmortyapi.com/api/episode/8"
+        ],
+        "url": "https://rickandmortyapi.com/api/character/214",
+        "created": "2017-12-30T14:24:57.993Z"
+    },
+    {
+        "id": 474,
+        "name": "Dancer Cowboy Morty",
+        "status": "Alive",
+        "species": "Human",
+        "type": "",
+        "gender": "Male",
+        "origin": {
+            "name": "unknown",
+            "url": ""
+        },
+        "location": {
+            "name": "Citadel of Ricks",
+            "url": "https://rickandmortyapi.com/api/location/3"
+        },
+        "image": "https://rickandmortyapi.com/api/character/avatar/474.jpeg",
+        "episode": [
+            "https://rickandmortyapi.com/api/episode/28"
+        ],
+        "url": "https://rickandmortyapi.com/api/character/474",
+        "created": "2018-05-22T17:17:10.102Z"
+    },
+    {
+        "id": 598,
+        "name": "Biblesaurus",
+        "status": "Alive",
+        "species": "Animal",
+        "type": "Soulless Puppet",
+        "gender": "Male",
+        "origin": {
+            "name": "Story Train",
+            "url": "https://rickandmortyapi.com/api/location/96"
+        },
+        "location": {
+            "name": "Story Train",
+            "url": "https://rickandmortyapi.com/api/location/96"
+        },
+        "image": "https://rickandmortyapi.com/api/character/avatar/598.jpeg",
+        "episode": [
+            "https://rickandmortyapi.com/api/episode/37"
+        ],
+        "url": "https://rickandmortyapi.com/api/character/598",
+        "created": "2020-08-06T11:37:30.354Z"
+    },
+    {
+        "id": 809,
+        "name": "Pussifer",
+        "status": "Dead",
+        "species": "Animal",
+        "type": "Tiger",
+        "gender": "Male",
+        "origin": {
+            "name": "Rick and Two Crows Planet",
+            "url": "https://rickandmortyapi.com/api/location/125"
+        },
+        "location": {
+            "name": "Rick and Two Crows Planet",
+            "url": "https://rickandmortyapi.com/api/location/125"
+        },
+        "image": "https://rickandmortyapi.com/api/character/avatar/809.jpeg",
+        "episode": [
+            "https://rickandmortyapi.com/api/episode/51"
+        ],
+        "url": "https://rickandmortyapi.com/api/character/809",
+        "created": "2021-11-02T13:51:30.942Z"
+    }
+] i
