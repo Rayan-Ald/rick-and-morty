@@ -9,6 +9,7 @@ export default function Acceuil() {
   const [episode, setEpisode] = useState(null);
   const [favorisCookie, setFavorisCookie] = useState(null);
   const [personnagesFavoris, setPersonnagesFavoris] = useState([]);
+  const [isLoadedPersonnagesFavoris, setIsLoadedPersonnagesFavoris] = useState(false);
 
   useEffect(() => {
     setFavorisCookie(Cookies.get('favorisCookies'))
@@ -34,24 +35,37 @@ export default function Acceuil() {
       .then(location => setLocation(location))
 
     if (favorisCookie) {
-      let fav = favorisCookie
-      let idPersonnagesFavoris = fav.split(',');
-      let url = 'https://rickandmortyapi.com/api/character/['
+      setFavorisCookie(Cookies.get('favorisCookies'))
+      //let idPersonnagesFavoris = favorisCookie.split(',');
+      let url = 'https://rickandmortyapi.com/api/character/[' + favorisCookie + ']';
 
-      idPersonnagesFavoris.forEach(id => {
-        url += id + ','
-      })
-      url = url.slice(0, -1) + ']'
+
       fetch(url)
         .then(response => response.json())
         .then(personnages => {
           setPersonnagesFavoris(personnages)
+          setIsLoadedPersonnagesFavoris(true)
         })
     }
   }, []);
+
+  useEffect(() => {
+    if (favorisCookie) {
+      setFavorisCookie(Cookies.get('favorisCookies'))
+      //let idPersonnagesFavoris = favorisCookie.split(',');
+      let url = 'https://rickandmortyapi.com/api/character/[' + favorisCookie + ']';
+
+
+      fetch(url)
+        .then(response => response.json())
+        .then(personnages => {
+          setPersonnagesFavoris(personnages)
+          setIsLoadedPersonnagesFavoris(true)
+        })
+    }
+  }, [favorisCookie]);
   return (
     <div>
-
       <div>
         <h2 style={{ margin: '1rem' }}>Personnages</h2>
         {characters ?
@@ -66,22 +80,16 @@ export default function Acceuil() {
       </div>
 
       <div>
-        <h2>Favoris</h2>
-        {favorisCookie ?
+        {isLoadedPersonnagesFavoris ?
           <div>
-            {personnagesFavoris.size > 5 ?
-              <CardGroup style={{ margin: '5rem' }}>
-                {personnagesFavoris.map(personnage =>
-                  <div key={personnage.id}> {Personnage(personnage, setFavorisCookie, 2)} </div>
-                )}
-              </CardGroup>
+            <h2 style={{ margin: '1rem' }}>Favoris</h2>
 
-              :
-              <CardGroup style={{ margin: '5rem' }}>
-                {personnagesFavoris.map(personnage =>
-                  <div key={personnage.id}> {Personnage(personnage, setFavorisCookie, 2)} </div>
-                )}
-              </CardGroup>}
+            <CardGroup style={{ margin: '5rem' }}>
+              {personnagesFavoris.slice(0, 5).map(personnage =>
+                <div key={personnage.id}> {Personnage(personnage, setFavorisCookie, 2)} </div>
+              )}
+            </CardGroup>
+
           </div>
           :
           <div>loading..</div>

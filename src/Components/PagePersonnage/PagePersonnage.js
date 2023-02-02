@@ -6,7 +6,6 @@ export default function PagePersonnage() {
     const { id } = useParams()
     const [character, setCharacter] = useState([])
     const [episodes, setEpisodes] = useState([]);
-    const [location, setLocation] = useState([]);
     const [isLoadedCharacter, setIsLoadedCharacter] = useState(false);
     const [isLoadedEpisodes, setIsLoadedEpisodes] = useState(false);
     const [active, setActive] = useState(false)
@@ -24,14 +23,7 @@ export default function PagePersonnage() {
                         setEpisodes(episodes);
                         setIsLoadedEpisodes(true)
                     })
-
-                fetch(`${characters.location.url}`)
-                    .then((res) => res.json())
-                    .then((data) => {
-                        setLocation(data);
-                    })
             })
-
     }, [id])
 
     const handleToggle = e => {
@@ -40,14 +32,11 @@ export default function PagePersonnage() {
     if (!isLoadedCharacter) {
         return <div>Loading characters...</div>
     }
-    let listEpisodes = character.episode
-    console.log('isloadedcharacters : ' + isLoadedCharacter + ', listEpisodes : ' + listEpisodes);
 
 
     if (!isLoadedEpisodes) {
         return <div>Loading episodes...</div>
     }
-    console.log(episodes);
     const episodesItem = episodes.map((episode) => {
         return <li onClick={sendToEpisode(episode.id)} key={episode.id}>Code : {episode.episode}, Nom : {episode.name}</li>
     })
@@ -59,10 +48,10 @@ export default function PagePersonnage() {
     }
 
     return (
-        <div >
-            <h1>Page Personnage : {character.name}</h1>
-            <img src={character.image} alt={character.name} style={{ width: '200px', alignContent: 'center' }} />
-            <p>Origine : {character.origin.name} <img src={character.origin.url} alt={character.origin.name} /></p>
+        <div style={{ margin: '1rem' }}>
+            <h1>Nom : {character.name}</h1>
+            <img src={character.image} alt={character.name} style={{ width: '200px', alignContent: 'center', margin: '2rem' }} />
+            <p>Origine : {character.origin.name}</p>
             <div className={`accordion ${active && "active"}`}>
                 <div className="accordion__title" onClick={handleToggle}>
                     Episodes <span className="accordion__icon"></span>
@@ -71,6 +60,6 @@ export default function PagePersonnage() {
                     <ul>{episodesItem}</ul>
                 </div>
             </div>
-        </div>
+        </div >
     )
 }

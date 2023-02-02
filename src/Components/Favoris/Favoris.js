@@ -29,7 +29,7 @@ export default function Favoris() {
                     setPersonnagesFavoris(personnages)
                 })
         }
-    }, [])
+    }, [personnagesFavoris])
     if (isLoaded) {
         personnagesFavoris.forEach(personnage => {
             personnageFavoriArray.push(personnage)

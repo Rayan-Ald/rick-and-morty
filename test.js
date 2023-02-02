@@ -10,7 +10,6 @@ useEffect(() => {
             )
                 .then((res) => res.json())
                 .then((data) => {
-                    console.log(data)
                     setInEpisodes(data);
                 })
                 .catch((error) => {
