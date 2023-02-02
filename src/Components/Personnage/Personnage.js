@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { solid } from '@fortawesome/fontawesome-svg-core/import.macro'
 import Cookies from 'js-cookie';
@@ -44,7 +44,7 @@ export default function Personnage(personnage, setFavorisCookie, parent) {
     }
     return (
         <Card style={{ width: '10rem', height: '20rem', margin: '1rem' }}>
-            <Card.Title>{personnage.name}</Card.Title>
+            <Card.Title style={{ margin: '1rem' }}>{personnage.name}</Card.Title>
             <Card.Img src={personnage.image} alt={personnage.name} />
             <Card.Link href={`/personnage/${personnage.id}`}>Plus d'infos</Card.Link>
             <button style={{ anchor: 'bottom' }} type="validate" onClick={() => addFavoris(personnage.id, personnage.name)}>

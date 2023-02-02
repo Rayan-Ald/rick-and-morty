@@ -42,8 +42,6 @@ export default function Episode(episode) {
     }
     useEffect(() => {
         episode.episode.characters.map(character => {
-            // let chara
-            let newChar = character.split('/')
             fetch(character)
                 .then(response => response.json())
                 .then(character => {

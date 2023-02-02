@@ -6,7 +6,6 @@ import { CardGroup } from 'react-bootstrap';
 export default function Acceuil() {
   const [characters, setCharacters] = useState(null);
   const [location, setLocation] = useState(null);
-  const [episode, setEpisode] = useState(null);
   const [favorisCookie, setFavorisCookie] = useState(null);
   const [personnagesFavoris, setPersonnagesFavoris] = useState([]);
   const [isLoadedPersonnagesFavoris, setIsLoadedPersonnagesFavoris] = useState(false);
@@ -36,7 +35,6 @@ export default function Acceuil() {
 
     if (favorisCookie) {
       setFavorisCookie(Cookies.get('favorisCookies'))
-      //let idPersonnagesFavoris = favorisCookie.split(',');
       let url = 'https://rickandmortyapi.com/api/character/[' + favorisCookie + ']';
 
 
@@ -52,7 +50,6 @@ export default function Acceuil() {
   useEffect(() => {
     if (favorisCookie) {
       setFavorisCookie(Cookies.get('favorisCookies'))
-      //let idPersonnagesFavoris = favorisCookie.split(',');
       let url = 'https://rickandmortyapi.com/api/character/[' + favorisCookie + ']';
 
 
