@@ -12,15 +12,52 @@ function Register() {
     const [password, setPassword] = useState("");
     const [name, setName] = useState("");
     const [user, loading, error] = useAuthState(auth);
+    const [boolPwd, setBoolPwd] = useState(false);
+    const [boolEmail, setBoolEmail] = useState(false);
+    const [bool, setBool] = useState(false);
+    const [componentEmail, setComponentEmail] = useState(<div></div>);
+    const [componentPwd, setComponentPwd] = useState(<div></div>);
     const navigate = useNavigate();
+
     const register = () => {
         if (!name) alert("Please enter name");
         registerWithEmailAndPassword(name, email, password);
     };
+
     useEffect(() => {
         if (loading) return;
-        if (user) navigate("/dashboard");
+        if (user) navigate("/dashBoard");
     }, [user, loading]);
+
+    useEffect(() => {
+        const regexEmail = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g;
+        if (email.length > 0) {
+            if (!regexEmail.test(email)) {
+                setBoolEmail(false);
+                setComponentEmail(<div style={{ color: 'red' }}>- Mauvais format d'email</div>)
+            }
+            else {
+                setBoolEmail(true);
+                setComponentEmail(<div ></div>)
+            }
+        }
+        if (password.length > 0) {
+            if (password.length < 8) {
+                setBoolPwd(false);
+                setComponentPwd(<div style={{ color: 'red' }}>- Mot de passe trop court</div>)
+            } else {
+                setBoolPwd(true);
+                setComponentPwd(<div></div>)
+            }
+        }
+
+        if (boolEmail && boolPwd) {
+            setBool(true)
+        } else {
+            setBool(false)
+        }
+    }, [password, email]);
+
     return (
         <div className="register">
             <div className="register__container">
@@ -45,9 +82,15 @@ function Register() {
                     onChange={(e) => setPassword(e.target.value)}
                     placeholder="Password"
                 />
-                <button className="register__btn" onClick={register}>
-                    Register
-                </button>
+                {!bool ?
+                    <button className="register__btn__disabled" disabled>
+                        Register
+                    </button>
+                    :
+                    <button className="register__btn" onClick={register}>
+                        Register
+                    </button>
+                }
                 <button
                     className="register__btn register__google"
                     onClick={signInWithGoogle}
@@ -55,7 +98,13 @@ function Register() {
                     Register with Google
                 </button>
                 <div>
-                    Already have an account? <Link to="/">Login</Link> now.
+                    Already have an account? <Link to="/login">Login</Link> now.
+                </div>
+                <div>
+                    {componentEmail}
+                </div>
+                <div>
+                    {componentPwd}
                 </div>
             </div>
         </div>

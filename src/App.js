@@ -14,6 +14,7 @@ import SingleEpisode from './Components/Episode/SingleEpisode';
 import Login from './Components/Login/Login';
 import Register from './Register/Register';
 import Dashboard from './Components/Dashboard/Dashboard';
+import Reset from './Components/Reset/Reset';
 
 export default function App() {
   return (
@@ -29,6 +30,7 @@ export default function App() {
           <Route path='/login' element={<Login />} />
           <Route path='/register' element={<Register />} />
           <Route path='/dashboard' element={<Dashboard />} />
+          <Route path='/reset' element={<Reset />} />
           <Route path='*' element={<Acceuil />} />
         </Routes>
       </Router>
