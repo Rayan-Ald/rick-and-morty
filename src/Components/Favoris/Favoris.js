@@ -8,6 +8,7 @@ export default function Favoris() {
     const [favorisCookie, setFavorisCookie] = useState(null)
     const [personnagesFavoris, setPersonnagesFavoris] = useState([]);
     const [isLoaded, setIsLoaded] = useState(false);
+    const [passer, setPasser] = useState(false);
     let personnageFavoriArray = [];
     useEffect(() => {
         const fav = Cookies.get('favorisCookies')
@@ -15,20 +16,29 @@ export default function Favoris() {
         if (fav !== undefined) {
             idPersonnagesFavoris = fav.split(',')
         }
-        let url = 'https://rickandmortyapi.com/api/character/['
+        if (idPersonnagesFavoris.length > 0) {
+            console.log("length", idPersonnagesFavoris.length);
+            let url = 'https://rickandmortyapi.com/api/character/['
 
-        if (idPersonnagesFavoris.length !== 0) {
-            idPersonnagesFavoris.map((id) => {
-                url += id + ','
-            })
-            url = url.slice(0, -1) + ']'
-            fetch(url)
-                .then(response => response.json())
-                .then(personnages => {
-                    setIsLoaded(true)
-                    setPersonnagesFavoris(personnages)
+            if (idPersonnagesFavoris.length > 0) {
+                idPersonnagesFavoris.map((id) => {
+                    if (id == null) setPasser(true)
+                    url += id + ','
                 })
+                url = url.slice(0, -1) + ']'
+                if (!passer) {
+                    fetch(url)
+                        .then(response => response.json())
+                        .then(personnages => {
+                            setIsLoaded(true)
+                            setPersonnagesFavoris(personnages)
+                        })
+                }
+
+            }
         }
+        else { setIsLoaded(true) }
+
     }, [personnagesFavoris])
     if (isLoaded) {
         personnagesFavoris.forEach(personnage => {

@@ -78,21 +78,27 @@ export default function Acceuil() {
           <div>loading..</div>
         }
       </div>
-
       <div>
-        {isLoadedPersonnagesFavoris ?
+        {personnagesFavoris.length > 0 ?
           <div>
-            <h2 style={{ margin: '1rem' }}>Favoris</h2>
+            {isLoadedPersonnagesFavoris ?
+              <div>
+                <h2 style={{ margin: '1rem' }}>Favoris</h2>
 
-            <CardGroup style={{ margin: '5rem' }}>
-              {personnagesFavoris.slice(0, 5).map(personnage =>
-                <div key={personnage.id}> {Personnage(personnage, setFavorisCookie, 2)} </div>
-              )}
-            </CardGroup>
-
+                <CardGroup style={{ margin: '5rem' }}>
+                  {personnagesFavoris.slice(0, 5).map(personnage =>
+                    <div key={personnage.id}> {Personnage(personnage, setFavorisCookie, 2)} </div>
+                  )}
+                </CardGroup>
+              </div>
+              :
+              <div>loading..</div>
+            }
           </div>
           :
-          <div>loading..</div>
+          <div>
+            Pas de favoris
+          </div>
         }
       </div>
 
