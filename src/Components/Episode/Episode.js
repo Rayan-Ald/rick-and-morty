@@ -5,6 +5,7 @@ import "./Episode.css"
 
 export default function Episode(episode) {
     const [characterCharacteristics, setCharacterCharacteristics] = useState([])
+    const [favorisCookie, setFavorisCookie] = useState([])
     const [isLoaded, setIsLoaded] = useState(false)
     const [active, setActive] = useState(false)
 
@@ -22,7 +23,7 @@ export default function Episode(episode) {
                         <CardGroup style={{ margin: '5rem' }} >
 
                             {characterCharacteristics.map(character =>
-                                <div key={character.id}>{Personnage(character, 0)}</div>
+                                <div key={character.id}>{Personnage(character, setFavorisCookie, 1)}</div>
                             )}
                         </CardGroup>
                         :
