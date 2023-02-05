@@ -1,24 +1,28 @@
+import { signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { auth, logInWithEmailAndPassword, signInWithGoogle } from "../../firebase";
-import { useAuthState } from "react-firebase-hooks/auth";
+import { auth, googleProvider } from "../../firebase";
 import "./Login.css";
+
 export default function Login() {
 
+
     const navigate = useNavigate();
+    const dispatch = useDispatch();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [user, loading, error] = useAuthState(auth);
     const [boolPwd, setBoolPwd] = useState(false);
     const [boolEmail, setBoolEmail] = useState(false);
     const [bool, setBool] = useState(false);
     const [componentEmail, setComponentEmail] = useState(<div></div>);
     const [componentPwd, setComponentPwd] = useState(<div></div>);
 
+    const user = useSelector((state) => state.user)
+
     useEffect(() => {
-        if (loading) return;
-        if (user) navigate("/dashBoard");
-    }, [user, loading]);
+        if (user.userId) navigate("/dashBoard");
+    }, [user]);
 
     useEffect(() => {
         const regexEmail = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g;
@@ -41,13 +45,33 @@ export default function Login() {
                 setComponentPwd(<div></div>)
             }
         }
-
         if (boolEmail && boolPwd) {
             setBool(true)
         } else {
             setBool(false)
         }
     }, [password, email]);
+
+    const signInWithGoogle = async (event) => {
+        event.preventDefault();
+        try {
+            await signInWithPopup(auth, googleProvider)
+        } catch (error) {
+            console.log(error);
+        }
+    }
+    const logIn = async (event) => {
+        event.preventDefault();
+        try {
+            await signInWithEmailAndPassword(auth, email, password)
+            console.log('signInWithEmailAndPassword');
+
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+
 
     return (
         <div className="login">
@@ -73,7 +97,7 @@ export default function Login() {
                         Login
                     </button>
                     :
-                    <button className="login__btn" onClick={() => logInWithEmailAndPassword(email, password)}>
+                    <button className="login__btn" onClick={logIn}>
                         Login
                     </button>
                 }

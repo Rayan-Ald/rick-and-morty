@@ -1,17 +1,17 @@
-import React, { useEffect, useState } from "react";
-import { useAuthState } from "react-firebase-hooks/auth";
-import { Link, useNavigate } from "react-router-dom";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import React, { useEffect, useState } from "react"
+import { useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom"
 import {
     auth,
-    registerWithEmailAndPassword,
     signInWithGoogle,
-} from "../firebase";
-import "./Register.css";
+} from "../../firebase"
+import "./Register.css"
 function Register() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [name, setName] = useState("");
-    const [user, loading, error] = useAuthState(auth);
+    const [loading, setLoading] = useState(false);
     const [boolPwd, setBoolPwd] = useState(false);
     const [boolEmail, setBoolEmail] = useState(false);
     const [bool, setBool] = useState(false);
@@ -19,15 +19,19 @@ function Register() {
     const [componentPwd, setComponentPwd] = useState(<div></div>);
     const navigate = useNavigate();
 
+    const userId = useSelector((state) => state.user)
+
     const register = () => {
         if (!name) alert("Please enter name");
-        registerWithEmailAndPassword(name, email, password);
+        createUserWithEmailAndPassword(name, email, password);
     };
 
     useEffect(() => {
         if (loading) return;
-        if (user) navigate("/dashBoard");
-    }, [user, loading]);
+        if (userId) {
+            navigate("/dashBoard");
+        }
+    }, [userId, loading]);
 
     useEffect(() => {
         const regexEmail = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g;
