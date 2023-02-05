@@ -7,7 +7,18 @@ export default function Episode(episode) {
     const [characterCharacteristics, setCharacterCharacteristics] = useState([])
     const [isLoaded, setIsLoaded] = useState(false)
     const [active, setActive] = useState(false)
+    const [favorisCookie, setFavorisCookie] = useState([])
+    useEffect(() => {
+        episode.episode.characters.map(character => {
+            fetch(character)
+                .then(response => response.json())
+                .then(character => {
+                    setCharacterCharacteristics(characterCharacteristics => [...characterCharacteristics, character])
+                })
+        })
 
+        setIsLoaded(true)
+    }, [])
     const handleToggle = e => {
         setActive(!active)
     }
@@ -22,7 +33,7 @@ export default function Episode(episode) {
                         <CardGroup style={{ margin: '5rem' }} >
 
                             {characterCharacteristics.map(character =>
-                                <div key={character.id}>{Personnage(character, 0)}</div>
+                                <div key={character.id}>{Personnage(character, setFavorisCookie, 1)}</div>
                             )}
                         </CardGroup>
                         :
@@ -40,19 +51,7 @@ export default function Episode(episode) {
             window.location.href = '/episode/' + id
         }
     }
-    useEffect(() => {
-        episode.episode.characters.map(character => {
-            // let chara
-            let newChar = character.split('/')
-            fetch(character)
-                .then(response => response.json())
-                .then(character => {
-                    setCharacterCharacteristics(characterCharacteristics => [...characterCharacteristics, character])
-                })
-        })
 
-        setIsLoaded(true)
-    }, [])
 
 
     return (

@@ -2,11 +2,12 @@ import Cookies from 'js-cookie';
 import Personnage from '../Personnage/Personnage';
 import React, { useState, useEffect } from 'react';
 import { CardGroup } from 'react-bootstrap';
+import { getFavoris } from '../../firebase';
+import { useParams } from 'react-router-dom';
 
-export default function Acceuil() {
-  const [characters, setCharacters] = useState(null);
+export default function Acceuil(user) {
+  const [characters, setCharacters] = useState([]);
   const [location, setLocation] = useState(null);
-  const [episode, setEpisode] = useState(null);
   const [favorisCookie, setFavorisCookie] = useState(null);
   const [personnagesFavoris, setPersonnagesFavoris] = useState([]);
   const [isLoadedPersonnagesFavoris, setIsLoadedPersonnagesFavoris] = useState(false);
@@ -34,44 +35,37 @@ export default function Acceuil() {
       .then(response => response.json())
       .then(location => setLocation(location))
 
-    if (favorisCookie) {
-      setFavorisCookie(Cookies.get('favorisCookies'))
-      //let idPersonnagesFavoris = favorisCookie.split(',');
-      let url = 'https://rickandmortyapi.com/api/character/[' + favorisCookie + ']';
+    // getFavoris()
+    //   .then(tabFavs => {
+    //     let url = 'https://rickandmortyapi.com/api/character/[' + tabFavs + ']'
+    //     fetch(url)
+    //       .then(response => response.json())
+    //       .then(data => {
+    //         console.log('Success:', data);
+    //         setPersonnagesFavoris(data)
+    //         setIsLoadedPersonnagesFavoris(true)
+    //       })
+    //   })
 
-
-      fetch(url)
-        .then(response => response.json())
-        .then(personnages => {
-          setPersonnagesFavoris(personnages)
-          setIsLoadedPersonnagesFavoris(true)
-        })
-    }
   }, []);
 
-  useEffect(() => {
-    if (favorisCookie) {
-      setFavorisCookie(Cookies.get('favorisCookies'))
-      //let idPersonnagesFavoris = favorisCookie.split(',');
-      let url = 'https://rickandmortyapi.com/api/character/[' + favorisCookie + ']';
-
-
-      fetch(url)
-        .then(response => response.json())
-        .then(personnages => {
-          setPersonnagesFavoris(personnages)
-          setIsLoadedPersonnagesFavoris(true)
-        })
-    }
-  }, [favorisCookie]);
   return (
     <div>
       <div>
         <h2 style={{ margin: '1rem' }}>Personnages</h2>
-        {characters ?
+        {characters.length > 0 ?
           <CardGroup style={{ margin: '5rem' }} >
             {characters.map(character =>
-              <div key={character.id}> {Personnage(character, setFavorisCookie, 1)} </div>
+              <div key={character.id}> {
+                isLoadedPersonnagesFavoris ?
+                  <div>
+                    {Personnage(character, 1, personnagesFavoris)}
+                  </div>
+                  :
+                  <div>
+                    {Personnage(character, 1, null)}
+                  </div>
+              } </div>
             )}
           </CardGroup>
           :
@@ -86,7 +80,7 @@ export default function Acceuil() {
 
             <CardGroup style={{ margin: '5rem' }}>
               {personnagesFavoris.slice(0, 5).map(personnage =>
-                <div key={personnage.id}> {Personnage(personnage, setFavorisCookie, 2)} </div>
+                <div key={personnage.id}> {Personnage(personnage, 2, personnagesFavoris)} </div>
               )}
             </CardGroup>
 
